@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -97,7 +98,36 @@ void add(std::vector<contact> &contactList) {
 
   contactList.push_back(con);
 }
-void remove(std::vector<contact> &contactList) {}
+
+void remove(std::vector<contact> &contactList) {
+  contact con;
+
+  if (contactList.empty()) {
+    std::cout << "\n[Error] Add a Contact!" << std::endl;
+    return;
+  }
+
+  for (int i = 0; i < contactList.size(); i++) {
+    std::cout << "\nContact Name: " << contactList[i].getName()
+              << "\nEmail: " << contactList[i].getEmail()
+              << "\nPhone Number: " << contactList[i].getPNum() << std::endl;
+  }
+
+  std::cout << "\nType a contact's name to remove:" << std::endl;
+  std::string contactName;
+
+  std::getline(std::cin, contactName);
+  contactList.erase(
+    std::remove_if(contactList.begin(), contactList.end(),
+                                   [&contactName]( contact& con) {
+                                     return con.getName() == contactName;
+                                   }),
+                    contactList.end()
+                  );
+
+  std::cout << "\nRemoved Contact: " + contactName << std::endl;
+  return;
+}
 
 void search(std::vector<contact> &contactList) {
 
@@ -107,4 +137,5 @@ void search(std::vector<contact> &contactList) {
               << "\nPhone Number: " << contactList[i].getPNum() << std::endl;
   }
 }
+
 void edit(std::vector<contact> &contactList) {}
