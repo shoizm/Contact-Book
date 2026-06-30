@@ -13,7 +13,7 @@ public:
   void setName(std::string n) { name = n; }
 
   void setPNum(std::string p) {
-    if (p.length() >= 4) {
+    if (p.length() >= 0) {
       number = p;
     } else {
       std::cout << "Invalid phone number." << std::endl;
@@ -113,17 +113,16 @@ void remove(std::vector<contact> &contactList) {
               << "\nPhone Number: " << contactList[i].getPNum() << std::endl;
   }
 
+  std::cin.ignore(1000, '\n');
   std::cout << "\nType a contact's name to remove:" << std::endl;
   std::string contactName;
 
   std::getline(std::cin, contactName);
-  contactList.erase(
-    std::remove_if(contactList.begin(), contactList.end(),
-                                   [&contactName]( contact& con) {
+  contactList.erase(std::remove_if(contactList.begin(), contactList.end(),
+                                   [contactName](contact con) {
                                      return con.getName() == contactName;
                                    }),
-                    contactList.end()
-                  );
+                    contactList.end());
 
   std::cout << "\nRemoved Contact: " + contactName << std::endl;
   return;
@@ -138,4 +137,33 @@ void search(std::vector<contact> &contactList) {
   }
 }
 
-void edit(std::vector<contact> &contactList) {}
+void edit(std::vector<contact> &contactList) {
+  contact con;
+
+  if (contactList.empty()) {
+    std::cout << "\n[Error] Add a Contact!" << std::endl;
+    return;
+  }
+
+
+  for (int i = 0; i < contactList.size(); i++) {
+    std::cout << "\nContact Name: " << contactList[i].getName()
+              << "\nEmail: " << contactList[i].getEmail()
+              << "\nPhone Number: " << contactList[i].getPNum() << std::endl;
+  }
+
+  std::cout << "\nSelect Contact to Edit:" << std::endl;
+  std::cin.ignore(1000, '\n');
+
+  std::string search;
+  std::getline(std::cin, search);
+
+  int index = -1;
+  for (int i = 0; i < contactList.size(); i++) {
+    if (contactList[i].getName() == search) {
+      index = i;
+      break;
+    }
+  }
+  
+  }
