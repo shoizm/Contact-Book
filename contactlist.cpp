@@ -145,7 +145,6 @@ void edit(std::vector<contact> &contactList) {
     return;
   }
 
-
   for (int i = 0; i < contactList.size(); i++) {
     std::cout << "\nContact Name: " << contactList[i].getName()
               << "\nEmail: " << contactList[i].getEmail()
@@ -165,5 +164,52 @@ void edit(std::vector<contact> &contactList) {
       break;
     }
   }
-  
+
+  int option;
+  std::cout << "\nSelect an option to edit"
+            << "\n1: Name"
+            << "\n2: Email"
+            << "\n3: Phone Number\n" << std::endl;
+  std::cin >> option;
+
+  switch (option) {
+  case 1:
+
+    if (index != -1) {
+      std::string editedname;
+      std::cin.ignore(1000, '\n');
+      std::cout << "\nType a new name: " << std::endl;
+      std::getline(std::cin, editedname);
+      contactList[index].setName(editedname);
+    } else {
+      std::cout << "No contact found." << std::endl;
+    }
+    break;
+
+  case 2:
+
+    if (index != -1) {
+      std::string editedemail;
+      std::cin.ignore(1000, '\n');
+      std::cout << "\nType a new email: " << std::endl;
+      std::getline(std::cin, editedemail);
+      contactList[index].setEmail(editedemail);
+    } else {
+      std::cout << "No contact found." << std::endl;
+    }
+    break;
+
+  case 3:
+
+    if (index != -1) {
+      std::string editednumber;
+      std::cin.ignore(1000, '\n');
+      std::cout << "\nType a new phone number: " << std::endl;
+      std::getline(std::cin, editednumber);
+      contactList[index].setPNum(editednumber);
+    } else {
+      std::cout << "No contact found." << std::endl;
+    }
+    break;
   }
+}
